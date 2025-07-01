@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface StudentRepo extends JpaRepository<Student,Integer> {
-    List<Student> findByLastnameOrFirstname(String lastname, String firstname);
+    List<Student> findByLastnameOrFirstnameOrAgeOrGrade(String lastname, String firstname, Integer age, String grade);
 
-    @Query(value = "SELECT * FROM student_db ORDER BY st_mark DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM student_db ORDER BY grade ASC LIMIT 3", nativeQuery = true)
     List<Student> findTop3StudentsNative();
 
 //    @Query(value = "SELECT * FROM student_db ORDER BY firstname OR lastname DESC LIMIT 5", nativeQuery = true)

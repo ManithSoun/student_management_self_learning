@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CourseRepo extends JpaRepository<Course, Integer>{
-    //@Query(value = "SELECT * FROM student_db WHERE firstname LIKE :prefix OR lastname LIKE :prefix LIMIT 5", nativeQuery = true)
-    //List<Student> findByFirstLetter(@Param("prefix") String prefix);
 
+    Boolean existsByCourseCode(String courseCode);
 
 }

@@ -1,6 +1,7 @@
 package com.spring_api_database.api_second_task.Student;
 
 import com.spring_api_database.api_second_task.Entity.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,10 @@ public class StudentService {
         this.studentRepo = studentRepo;
     }
 
-    public void saveInfo(Student student){
-        studentRepo.save(student);
+    public Student saveInfo(Student student) {
+        return studentRepo.save(student);
     }
+
     public List<Student> getAllInfo(){
         return studentRepo.findAll();
     }
@@ -28,8 +30,8 @@ public class StudentService {
         studentRepo.saveAll(students);
     }
 
-    public List<Student> getStudentByLastnameOrFirstname(String lastname, String firstname) {
-        return studentRepo.findByLastnameOrFirstname(lastname, firstname);
+    public List<Student> getStudentByLastnameOrFirstnameOrAgeOrGrade(String lastname, String firstname, Integer age, String grade) {
+        return studentRepo.findByLastnameOrFirstnameOrAgeOrGrade(lastname, firstname, age, grade);
     }
 
     public String deleteStudent(int id){
@@ -56,6 +58,7 @@ public class StudentService {
             updateStudent.setGrade(student.getGrade());
             updateStudent.setFirstname(student.getFirstname());
             updateStudent.setLastname(student.getLastname());
+            updateStudent.setAge(student.getAge());
             studentRepo.save(updateStudent);
             return updateStudent;
         }

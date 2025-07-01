@@ -3,38 +3,43 @@ package com.spring_api_database.api_second_task.Student;
 import com.spring_api_database.api_second_task.Entity.Student;
 //import org.springframework.beans.factory.annotation.Autowired;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
 
 
-    @GetMapping("/getStudent")
-    public List<Student> getInfo(Student student){
+    @GetMapping(value = "")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Student> getInfo(){
         return studentService.getAllInfo();
     }
 
-    @GetMapping("/getStudent/{id}")
+    @GetMapping("/{id}")
     public Student getInfoById(@PathVariable int id) {
         return studentService.getStudentById(id);
     }
 
 //    @GetMapping("/{lastname} | {firstname}")
-    @GetMapping("/getStudentByName")
-    public List<Student> getInfoByLastnameOrFirstname(
+    @GetMapping("/search")
+    public List<Student> searchStudents(
             @RequestParam(required = false) String lastname,
-            @RequestParam(required = false) String firstname) {
-        return studentService.getStudentByLastnameOrFirstname(lastname, firstname);
+            @RequestParam(required = false) String firstname,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) String grade) {
+        return studentService.getStudentByLastnameOrFirstnameOrAgeOrGrade(lastname, firstname, age, grade);
     }
 
-    @PostMapping("/addStudent")
-    public String postInfo(@RequestBody Student student){
-        studentService.saveInfo(student);
-        return "Saved!";
+    @PostMapping("/add")
+    public ResponseEntity<Student> postInfo(@RequestBody Student student){
+        Student saveStudent = studentService.saveInfo(student);
+        return ResponseEntity.ok(saveStudent);
     }
 
     @PostMapping("/addMultiStudent")
@@ -44,12 +49,12 @@ public class StudentController {
     }
 
     @PutMapping("/updateStudent")
-    public String putInfo(@RequestBody Student student){
-        studentService.updateInfo(student);
-        return "Updated!";
+    public ResponseEntity<Student> putInfo(@RequestBody Student student){
+        Student updateStudent = studentService.updateInfo(student);
+        return ResponseEntity.ok(updateStudent);
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteInfo(@PathVariable int id){
         return studentService.deleteStudent(id);
     }

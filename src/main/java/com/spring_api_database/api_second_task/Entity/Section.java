@@ -1,5 +1,6 @@
 package com.spring_api_database.api_second_task.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +25,12 @@ public class Section {
     @Column
     private String sectionName;
 
-    @Column
-    private int courseId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id")
+    @JsonIgnore
+    private Course course;
 
-
+//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Enrollment> enrollments;
 }
+
